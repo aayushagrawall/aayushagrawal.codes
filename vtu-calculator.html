@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VTU SGPA / CGPA Calculator — Aayush Agrawal</title>
   <meta name="description" content="Calculate your VTU SGPA and CGPA easily. Made by Aayush Agrawal." />
@@ -162,6 +163,7 @@
       .sem-row { grid-template-columns: 60px 1fr auto; }
     }
   </style>
+  <script>!function(){var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}();</script>
 </head>
 <body>
 
@@ -176,6 +178,10 @@
         <li><a href="vtu-calculator.html" class="active-nav">vtu calc</a></li>
         <li><a href="index.html#contact">contact</a></li>
       </ul>
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+      </button>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>

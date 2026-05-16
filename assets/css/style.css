@@ -712,3 +712,93 @@ a, button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000
   #navbar { position: relative; }
   #hero { padding-top: 1rem; }
 }
+
+
+/* ============ DARK THEME ============ */
+[data-theme="dark"] {
+  --paper:        #1a1612;
+  --paper-dark:   #221e19;
+  --ink:          #e8e0d0;
+  --ink-light:    #cfc5b2;
+  --ink-faint:    #a09080;
+  --pencil:       #8b7355;
+  --pencil-light: #6b5840;
+  --accent:       #7aa8d8;
+  --accent-red:   #c96060;
+  --accent-green: #5daa70;
+  --sketch-line:  rgba(232, 224, 208, 0.08);
+}
+
+[data-theme="dark"] body {
+  background-color: var(--paper);
+}
+
+[data-theme="dark"] .project-card {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] .sketch-box {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] .notebook-lines {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] .doodle-note {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] .doodle-note::before {
+  background: var(--paper);
+}
+
+[data-theme="dark"] footer {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] #navbar {
+  background: var(--paper);
+}
+
+[data-theme="dark"] .file-tree {
+  background: var(--paper-dark);
+}
+
+[data-theme="dark"] .hero-doodle svg rect[fill="#ede7d4"] {
+  fill: #2a2420;
+}
+
+[data-theme="dark"] html {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 28 L18 4 L20 14 L28 12 Z' fill='%23e8e0d0' stroke='%231a1612' stroke-width='1'/%3E%3Ccircle cx='4' cy='28' r='2' fill='%238b7355'/%3E%3C/svg%3E") 4 28, auto;
+}
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+  filter: url(#sketch);
+  position: relative;
+}
+
+.theme-toggle:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* sun icon shown in dark mode, moon in light */
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }

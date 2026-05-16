@@ -141,3 +141,36 @@ function updateFileTree() {
   });
 }
 window.addEventListener('scroll', updateFileTree, { passive: true });
+
+
+// ── Theme toggle ──────────────────────────────────
+(function () {
+  // Apply saved theme immediately (also done inline in HTML, this is a fallback)
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+
+  function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+  }
+
+  // Wire every toggle button on the page
+  function wireToggles() {
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      // avoid double-binding
+      if (btn.dataset.wired) return;
+      btn.dataset.wired = '1';
+      btn.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+    });
+  }
+
+  // Wire on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireToggles);
+  } else {
+    wireToggles();
+  }
+})();
