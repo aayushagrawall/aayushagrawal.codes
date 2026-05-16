@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iOS Shortcuts — Aayush Agrawal</title>
+  <meta name="description" content="iOS Shortcuts made by Aayush Agrawal — Attendance Calculator and more." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <svg id="svg-filters" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="2" seed="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="7" result="noise"/>
+        <feComposite in="SourceGraphic" in2="noise" operator="in" result="tex"/>
+        <feBlend in="SourceGraphic" in2="tex" mode="multiply"/>
+      </filter>
+      <filter id="squiggle" x="-5%" y="-80%" width="110%" height="300%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="2" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">~/aayush<span>.codes</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="index.html#about">about</a></li>
+        <li><a href="index.html#projects">projects</a></li>
+        <li><a href="shortcuts.html" class="active-nav">shortcuts</a></li>
+        <li><a href="vtu-calculator.html">vtu calc</a></li>
+        <li><a href="index.html#contact">contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main style="padding-top: 90px; padding-bottom: 6rem;">
+    <div class="container">
+
+      <!-- Page header -->
+      <div style="margin-bottom: 3rem;" class="fade-up">
+        <div class="file-tree" style="margin-bottom: 1.5rem;">
+          <div>📁 <span class="dir">aayushagrawal.codes/</span></div>
+          <div>&nbsp;&nbsp;├── <span class="file">index.html</span></div>
+          <div>&nbsp;&nbsp;├── <span class="active tree-file">shortcuts.html</span> <span class="comment"># ← you are here</span></div>
+          <div>&nbsp;&nbsp;├── <span class="file">vtu-calculator.html</span></div>
+          <div>&nbsp;&nbsp;└── <span class="file">...</span></div>
+        </div>
+        <h1 class="section-title">iOS Shortcuts</h1>
+        <p style="font-family: var(--font-main); color: var(--ink-faint); font-size: 1.1rem; margin-top: 0.8rem; max-width: 560px;">
+          // I build iPhone Shortcuts to automate everyday tasks. Here's what I've shipped so far.
+        </p>
+      </div>
+
+      <!-- Shortcut card: Attendance Calculator -->
+      <div class="fade-up" style="max-width: 700px;">
+        <div class="project-card" style="padding: 2rem; position: relative;">
+          <div class="pin"></div>
+
+          <!-- App icon doodle -->
+          <div style="display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;">
+            <div style="flex-shrink: 0;">
+              <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" filter="url(#sketch)">
+                <rect x="4" y="4" width="64" height="64" rx="16" fill="#7c5cbf" stroke="#1a1410" stroke-width="2"/>
+                <!-- calculator grid -->
+                <rect x="16" y="18" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="30" y="18" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="44" y="18" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="16" y="30" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="30" y="30" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="44" y="30" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="16" y="42" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="30" y="42" width="10" height="8" rx="2" fill="white" opacity="0.9"/>
+                <rect x="44" y="42" width="10" height="8" rx="2" fill="#ffcc00" opacity="0.95"/>
+              </svg>
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+              <div style="font-family: var(--font-main); font-size: 0.85rem; color: var(--accent); margin-bottom: 0.3rem;">
+                iOS Shortcut · v1.0.2 · Updated May 13, 2026
+              </div>
+              <h2 style="font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 0.4rem; line-height: 1.2;">
+                Attendance Calculator<br><span style="color: var(--accent);">(85% Tracker)</span>
+              </h2>
+              <p style="font-family: var(--font-body); color: var(--ink-faint); font-size: 0.95rem; margin-bottom: 1rem;">
+                An iPhone Shortcut that calculates your attendance percentage and tells you whether you're safe to bunk classes or need to attend more to reach the 85% requirement.
+              </p>
+
+              <!-- Stats row -->
+              <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 0.5rem 1rem; border: 1.5px solid var(--ink); filter: url(#sketch);">
+                  <div style="font-family: var(--font-display); font-size: 1.6rem;">31</div>
+                  <div style="font-family: var(--font-main); font-size: 0.8rem; color: var(--pencil);">downloads</div>
+                </div>
+                <div style="text-align: center; padding: 0.5rem 1rem; border: 1.5px solid var(--ink); filter: url(#sketch);">
+                  <div style="font-family: var(--font-display); font-size: 1.6rem;">1</div>
+                  <div style="font-family: var(--font-main); font-size: 0.8rem; color: var(--pencil);">heart</div>
+                </div>
+                <div style="text-align: center; padding: 0.5rem 1rem; border: 1.5px solid var(--ink); filter: url(#sketch);">
+                  <div style="font-family: var(--font-display); font-size: 1.6rem;">iOS 26+</div>
+                  <div style="font-family: var(--font-main); font-size: 0.8rem; color: var(--pencil);">requires</div>
+                </div>
+              </div>
+
+              <a href="https://routinehub.co/shortcut/25458/" target="_blank" rel="noopener" class="btn-sketch filled">
+                Get Shortcut →
+              </a>
+            </div>
+          </div>
+
+          <!-- Features -->
+          <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--pencil-light);">
+            <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 1rem;">// features</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem;">
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Calculates current attendance %
+              </div>
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Checks if above or below 85%
+              </div>
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Shows classes you can bunk
+              </div>
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Shows classes you must attend
+              </div>
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Simple & fast interface
+              </div>
+              <div style="font-family: var(--font-main); font-size: 0.95rem; color: var(--ink-light); display: flex; gap: 0.5rem;">
+                <span style="color: var(--accent-green);">✓</span> Works for any college/school
+              </div>
+            </div>
+          </div>
+
+          <!-- How it works -->
+          <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--pencil-light);">
+            <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 0.8rem;">// how it works</p>
+            <div class="notebook-lines">
+              <div class="nb-row"><span class="nb-label">Step 1</span><span class="nb-value">Enter total classes conducted</span></div>
+              <div class="nb-row"><span class="nb-label">Step 2</span><span class="nb-value">Enter classes attended</span></div>
+              <div class="nb-row"><span class="nb-label">Output</span><span class="nb-value">Attendance % + bunk/attend count</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- More coming soon -->
+      <div class="fade-up" style="margin-top: 2rem; max-width: 700px;">
+        <div class="project-card" style="border-style: dashed; text-align: center; padding: 2rem;">
+          <p style="font-family: var(--font-display); font-size: 1.3rem; color: var(--pencil-light); margin-bottom: 0.5rem;">more coming soon...</p>
+          <p style="font-family: var(--font-main); color: var(--pencil); font-size: 0.95rem;">// working on more shortcuts. stay tuned.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        Designed &amp; coded by <strong>Aayush Agrawal</strong> — with pencil, paper &amp; Python 🖊️
+        &nbsp;·&nbsp; <a href="https://github.com/aayushagrawall" style="color:var(--accent);text-decoration:none;">@aayushagrawall</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

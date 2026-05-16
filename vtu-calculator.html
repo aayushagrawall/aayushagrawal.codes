@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VTU SGPA / CGPA Calculator — Aayush Agrawal</title>
+  <meta name="description" content="Calculate your VTU SGPA and CGPA easily. Made by Aayush Agrawal." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <svg id="svg-filters" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="2" seed="3" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="7" result="noise"/>
+        <feComposite in="SourceGraphic" in2="noise" operator="in" result="tex"/>
+        <feBlend in="SourceGraphic" in2="tex" mode="multiply"/>
+      </filter>
+      <filter id="squiggle" x="-5%" y="-80%" width="110%" height="300%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="2" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <style>
+    /* Calculator specific styles */
+    .calc-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border: 2px solid var(--ink);
+      filter: url(#sketch);
+      width: fit-content;
+    }
+    .calc-tab {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      padding: 0.5em 1.4em;
+      background: transparent;
+      border: none;
+      border-right: 2px solid var(--ink);
+      color: var(--ink-faint);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .calc-tab:last-child { border-right: none; }
+    .calc-tab.active { background: var(--ink); color: var(--paper); }
+
+    .calc-panel { display: none; }
+    .calc-panel.active { display: block; }
+
+    .subject-row {
+      display: grid;
+      grid-template-columns: 1fr 120px 120px auto;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .sketch-input {
+      font-family: var(--font-main);
+      font-size: 1rem;
+      padding: 0.4em 0.7em;
+      border: 2px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+      width: 100%;
+      outline: none;
+      filter: url(#sketch);
+      transition: border-color 0.2s;
+    }
+    .sketch-input:focus { border-color: var(--accent); }
+    .sketch-input::placeholder { color: var(--pencil-light); }
+
+    select.sketch-input {
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1410' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.7rem center;
+      padding-right: 2rem;
+    }
+
+    .remove-btn {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--ink);
+      background: transparent;
+      color: var(--accent-red);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      filter: url(#sketch);
+      flex-shrink: 0;
+    }
+    .remove-btn:hover { background: var(--accent-red); color: var(--paper); }
+
+    .result-box {
+      margin-top: 2rem;
+      padding: 1.5rem 2rem;
+      border: 2px solid var(--ink);
+      background: var(--paper-dark);
+      filter: url(#sketch);
+      display: none;
+    }
+    .result-box.visible { display: block; }
+
+    .result-score {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .result-label {
+      font-family: var(--font-main);
+      font-size: 1rem;
+      color: var(--pencil);
+      margin-top: 0.3rem;
+    }
+
+    .result-grade {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      padding: 0.2em 0.8em;
+      border: 2px solid var(--ink);
+      filter: url(#sketch);
+    }
+
+    .grade-O  { background: #2d6b3a; color: var(--paper); }
+    .grade-A  { background: #2d5a8e; color: var(--paper); }
+    .grade-B  { background: #1a1410; color: var(--paper); }
+    .grade-C  { background: #8b7355; color: var(--paper); }
+    .grade-D  { background: #8b2020; color: var(--paper); }
+    .grade-F  { background: #4a0000; color: var(--paper); }
+
+    .sem-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 80px auto;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .col-label {
+      font-family: var(--font-main);
+      font-size: 0.85rem;
+      color: var(--pencil);
+    }
+
+    @media (max-width: 600px) {
+      .subject-row { grid-template-columns: 1fr 90px; }
+      .subject-row .credits-col,
+      .subject-row .remove-col { display: none; }
+      .sem-row { grid-template-columns: 60px 1fr auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">~/aayush<span>.codes</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">home</a></li>
+        <li><a href="index.html#about">about</a></li>
+        <li><a href="index.html#projects">projects</a></li>
+        <li><a href="shortcuts.html">shortcuts</a></li>
+        <li><a href="vtu-calculator.html" class="active-nav">vtu calc</a></li>
+        <li><a href="index.html#contact">contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main style="padding-top: 90px; padding-bottom: 6rem;">
+    <div class="container">
+
+      <!-- Page header -->
+      <div class="fade-up" style="margin-bottom: 2.5rem;">
+        <div class="file-tree" style="margin-bottom: 1.5rem;">
+          <div>📁 <span class="dir">aayushagrawal.codes/</span></div>
+          <div>&nbsp;&nbsp;├── <span class="file">index.html</span></div>
+          <div>&nbsp;&nbsp;├── <span class="file">shortcuts.html</span></div>
+          <div>&nbsp;&nbsp;├── <span class="active tree-file">vtu-calculator.html</span> <span class="comment"># ← you are here</span></div>
+          <div>&nbsp;&nbsp;└── <span class="file">...</span></div>
+        </div>
+        <h1 class="section-title">VTU GPA Calculator</h1>
+        <p style="font-family: var(--font-main); color: var(--ink-faint); font-size: 1.1rem; margin-top: 0.8rem; max-width: 560px;">
+          // Calculate your SGPA per semester or your overall CGPA across semesters. Built for VTU grading system (10-point scale).
+        </p>
+      </div>
+
+      <!-- Grade reference card -->
+      <div class="fade-up" style="margin-bottom: 2rem;">
+        <div class="sketch-box" style="padding: 1.2rem 1.5rem; background: var(--paper-dark); display: inline-block;">
+          <p style="font-family: var(--font-display); font-size: 0.9rem; color: var(--pencil); margin-bottom: 0.8rem;">// VTU grade → grade point</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <span class="skill-tag" style="--r:0deg;">O = 10</span>
+            <span class="skill-tag" style="--r:0deg;">A+ = 9</span>
+            <span class="skill-tag" style="--r:0deg;">A = 8</span>
+            <span class="skill-tag" style="--r:0deg;">B+ = 7</span>
+            <span class="skill-tag" style="--r:0deg;">B = 6</span>
+            <span class="skill-tag" style="--r:0deg;">C = 5</span>
+            <span class="skill-tag" style="--r:0deg;">P = 4</span>
+            <span class="skill-tag" style="--r:0deg; border-color: var(--accent-red); color: var(--accent-red);">F = 0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="fade-up">
+        <div class="calc-tabs">
+          <button class="calc-tab active" onclick="switchTab('sgpa')">SGPA Calculator</button>
+          <button class="calc-tab" onclick="switchTab('cgpa')">CGPA Calculator</button>
+        </div>
+      </div>
+
+      <!-- ── SGPA Panel ── -->
+      <div class="calc-panel active fade-up" id="panel-sgpa" style="max-width: 750px;">
+        <div class="sketch-box" style="padding: 2rem; background: var(--paper);">
+          <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 1.2rem;">// enter your subjects</p>
+
+          <!-- Column labels -->
+          <div class="subject-row" style="margin-bottom: 0.3rem;">
+            <span class="col-label">Subject Name</span>
+            <span class="col-label credits-col">Credits</span>
+            <span class="col-label">Grade</span>
+            <span style="width:32px;"></span>
+          </div>
+
+          <div id="subjects-list"></div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+            <button class="btn-sketch" onclick="addSubject()">+ Add Subject</button>
+            <button class="btn-sketch filled" onclick="calculateSGPA()">Calculate SGPA</button>
+            <button class="btn-sketch" onclick="clearSGPA()">Clear</button>
+          </div>
+
+          <div class="result-box" id="sgpa-result">
+            <div style="display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
+              <div>
+                <div class="result-score" id="sgpa-score">—</div>
+                <div class="result-label">SGPA (Semester GPA)</div>
+                <div class="result-grade" id="sgpa-grade-badge"></div>
+              </div>
+              <div style="font-family: var(--font-main); color: var(--ink-faint); font-size: 0.95rem;" id="sgpa-breakdown"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CGPA Panel ── -->
+      <div class="calc-panel fade-up" id="panel-cgpa" style="max-width: 750px;">
+        <div class="sketch-box" style="padding: 2rem; background: var(--paper);">
+          <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 1.2rem;">// enter SGPA for each semester</p>
+
+          <!-- Column labels -->
+          <div class="sem-row" style="margin-bottom: 0.3rem;">
+            <span class="col-label">Sem</span>
+            <span class="col-label">SGPA</span>
+            <span class="col-label">Credits</span>
+            <span style="width:32px;"></span>
+          </div>
+
+          <div id="semesters-list"></div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+            <button class="btn-sketch" onclick="addSemester()">+ Add Semester</button>
+            <button class="btn-sketch filled" onclick="calculateCGPA()">Calculate CGPA</button>
+            <button class="btn-sketch" onclick="clearCGPA()">Clear</button>
+          </div>
+
+          <div class="result-box" id="cgpa-result">
+            <div style="display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
+              <div>
+                <div class="result-score" id="cgpa-score">—</div>
+                <div class="result-label">CGPA (Cumulative GPA)</div>
+                <div class="result-grade" id="cgpa-grade-badge"></div>
+              </div>
+              <div style="font-family: var(--font-main); color: var(--ink-faint); font-size: 0.95rem;" id="cgpa-breakdown"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        Designed &amp; coded by <strong>Aayush Agrawal</strong> — with pencil, paper &amp; Python 🖊️
+        &nbsp;·&nbsp; <a href="https://github.com/aayushagrawall" style="color:var(--accent);text-decoration:none;">@aayushagrawall</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // ── Grade points map
+    const GRADE_POINTS = { 'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0 };
+    const GRADE_OPTIONS = Object.keys(GRADE_POINTS);
+
+    // ── Tab switching
+    function switchTab(tab) {
+      document.querySelectorAll('.calc-tab').forEach((t, i) => {
+        t.classList.toggle('active', (i === 0 && tab === 'sgpa') || (i === 1 && tab === 'cgpa'));
+      });
+      document.getElementById('panel-sgpa').classList.toggle('active', tab === 'sgpa');
+      document.getElementById('panel-cgpa').classList.toggle('active', tab === 'cgpa');
+    }
+
+    // ── SGPA
+    let subjectCount = 0;
+
+    function addSubject(name = '', credits = 3, grade = 'O') {
+      subjectCount++;
+      const id = 'sub-' + subjectCount;
+      const list = document.getElementById('subjects-list');
+      const row = document.createElement('div');
+      row.className = 'subject-row';
+      row.id = id;
+      row.innerHTML = `
+        <input class="sketch-input" type="text" placeholder="e.g. Mathematics" value="${name}" />
+        <input class="sketch-input credits-col" type="number" min="1" max="6" value="${credits}" />
+        <select class="sketch-input">
+          ${GRADE_OPTIONS.map(g => `<option value="${g}" ${g === grade ? 'selected' : ''}>${g}</option>`).join('')}
+        </select>
+        <button class="remove-btn remove-col" onclick="document.getElementById('${id}').remove()">×</button>
+      `;
+      list.appendChild(row);
+    }
+
+    function calculateSGPA() {
+      const rows = document.querySelectorAll('#subjects-list .subject-row');
+      if (!rows.length) { alert('Add at least one subject!'); return; }
+
+      let totalPoints = 0, totalCredits = 0;
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll('input, select');
+        const credits = parseFloat(inputs[1].value) || 3;
+        const grade = inputs[2].value;
+        const gp = GRADE_POINTS[grade] ?? 0;
+        totalPoints += gp * credits;
+        totalCredits += credits;
+      });
+
+      const sgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+      showResult('sgpa', sgpa, totalPoints, totalCredits);
+    }
+
+    function clearSGPA() {
+      document.getElementById('subjects-list').innerHTML = '';
+      document.getElementById('sgpa-result').classList.remove('visible');
+      subjectCount = 0;
+    }
+
+    // ── CGPA
+    let semCount = 0;
+
+    function addSemester(sgpa = '', credits = 22) {
+      semCount++;
+      const id = 'sem-' + semCount;
+      const list = document.getElementById('semesters-list');
+      const row = document.createElement('div');
+      row.className = 'sem-row';
+      row.id = id;
+      row.innerHTML = `
+        <span style="font-family:var(--font-display);font-size:1rem;color:var(--pencil);">Sem ${semCount}</span>
+        <input class="sketch-input" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.5" value="${sgpa}" />
+        <input class="sketch-input" type="number" min="1" max="30" placeholder="Credits" value="${credits}" />
+        <button class="remove-btn" onclick="document.getElementById('${id}').remove()">×</button>
+      `;
+      list.appendChild(row);
+    }
+
+    function calculateCGPA() {
+      const rows = document.querySelectorAll('#semesters-list .sem-row');
+      if (!rows.length) { alert('Add at least one semester!'); return; }
+
+      let totalPoints = 0, totalCredits = 0;
+      rows.forEach(row => {
+        const inputs = row.querySelectorAll('input');
+        const sgpa = parseFloat(inputs[0].value) || 0;
+        const credits = parseFloat(inputs[1].value) || 22;
+        totalPoints += sgpa * credits;
+        totalCredits += credits;
+      });
+
+      const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+      showResult('cgpa', cgpa, totalPoints, totalCredits);
+    }
+
+    function clearCGPA() {
+      document.getElementById('semesters-list').innerHTML = '';
+      document.getElementById('cgpa-result').classList.remove('visible');
+      semCount = 0;
+    }
+
+    // ── Shared result renderer
+    function showResult(type, score, points, credits) {
+      const s = parseFloat(score);
+      let gradeName, gradeClass;
+      if (s >= 9)      { gradeName = 'Outstanding (O)';  gradeClass = 'grade-O'; }
+      else if (s >= 8) { gradeName = 'Excellent (A+/A)'; gradeClass = 'grade-A'; }
+      else if (s >= 7) { gradeName = 'Good (B+)';        gradeClass = 'grade-B'; }
+      else if (s >= 6) { gradeName = 'Above Average (B)';gradeClass = 'grade-C'; }
+      else if (s >= 5) { gradeName = 'Average (C)';      gradeClass = 'grade-D'; }
+      else if (s >= 4) { gradeName = 'Pass (P)';         gradeClass = 'grade-D'; }
+      else             { gradeName = 'Fail (F)';          gradeClass = 'grade-F'; }
+
+      document.getElementById(`${type}-score`).textContent = score;
+      const badge = document.getElementById(`${type}-grade-badge`);
+      badge.textContent = gradeName;
+      badge.className = `result-grade ${gradeClass}`;
+      document.getElementById(`${type}-breakdown`).innerHTML =
+        `Total Grade Points: <strong>${points.toFixed(1)}</strong><br>Total Credits: <strong>${credits}</strong>`;
+      const box = document.getElementById(`${type}-result`);
+      box.classList.add('visible');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ── Init with default subjects
+    addSubject('Mathematics', 4, 'O');
+    addSubject('Physics', 3, 'A+');
+    addSubject('Programming', 3, 'A');
+    addSubject('', 3, 'B+');
+
+    addSemester('8.5', 22);
+    addSemester('7.8', 22);
+  </script>
+</body>
+</html>
