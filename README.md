@@ -1,31 +1,27 @@
 # aayushagrawal.codes
 
-Personal portfolio website — hand-drawn / sketch pencil aesthetic.
+Personal portfolio website: minimal, typographic, light and dark.
 
 ## 📁 File Structure
 
 ```
 aayushagrawal.codes/
-├── index.html          # Main site (single-page)
-├── README.md           # This file
-├── assets/
-│   ├── css/
-│   │   └── style.css   # All styles — sketch/pencil theme
-│   └── js/
-│       └── main.js     # Animations, typewriter, trail effect
-└── sections/           # (reference: logical sections in index.html)
-    ├── hero            # Landing / intro
-    ├── about           # Bio, skills, stats
-    ├── projects        # GitHub repos
-    └── contact         # Links & email
+├── index.html            # Home: hero, work, tools, about, contact
+├── shortcuts.html        # iOS Shortcuts (Attendance Calculator)
+├── vtu-calculator.html   # VTU SGPA / CGPA calculator
+├── favicon.svg
+└── assets/
+    ├── css/style.css     # Design tokens + all components
+    └── js/main.js        # Theme, nav, scroll reveal
 ```
 
-## 🎨 Aesthetic
+## 🎨 Design
 
-- **Sketch / pencil on paper** — SVG displacement filters, hand-drawn borders
-- **Paper texture** — repeating ruled lines, grain overlay
-- **Pencil cursor** — custom SVG cursor that trails across the page
-- **Fonts**: Architects Daughter · Caveat · Kalam · Special Elite
+- **Minimal and typographic**: lots of whitespace, hairline borders, one orange accent
+- **Fonts**: Geist (UI and body), Geist Mono (labels), Instrument Serif italic (accent phrases)
+- **Themes**: follows the system setting, with a manual toggle that is remembered
+- **Tokens**: colours, spacing and radii are CSS custom properties at the top of `style.css`
+- **Accessible**: visible focus rings, reduced-motion support, AA text contrast in both themes
 
 ## 🚀 Deploy
 

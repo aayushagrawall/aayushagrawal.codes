@@ -2,441 +2,282 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VTU SGPA / CGPA Calculator — Aayush Agrawal</title>
-  <meta name="description" content="Calculate your VTU SGPA and CGPA easily. Made by Aayush Agrawal." />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>VTU SGPA &amp; CGPA Calculator — Aayush Agrawal</title>
+  <meta name="description" content="Calculate your VTU SGPA and CGPA on the 10-point scale. Made by Aayush Agrawal." />
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <svg id="svg-filters" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="2" seed="3" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="7" result="noise"/>
-        <feComposite in="SourceGraphic" in2="noise" operator="in" result="tex"/>
-        <feBlend in="SourceGraphic" in2="tex" mode="multiply"/>
-      </filter>
-      <filter id="squiggle" x="-5%" y="-80%" width="110%" height="300%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="2" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <style>
-    /* Calculator specific styles */
-    .calc-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 2rem;
-      border: 2px solid var(--ink);
-      filter: url(#sketch);
-      width: fit-content;
-    }
-    .calc-tab {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      padding: 0.5em 1.4em;
-      background: transparent;
-      border: none;
-      border-right: 2px solid var(--ink);
-      color: var(--ink-faint);
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .calc-tab:last-child { border-right: none; }
-    .calc-tab.active { background: var(--ink); color: var(--paper); }
-
-    .calc-panel { display: none; }
-    .calc-panel.active { display: block; }
-
-    .subject-row {
-      display: grid;
-      grid-template-columns: 1fr 120px 120px auto;
-      gap: 0.6rem;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .sketch-input {
-      font-family: var(--font-main);
-      font-size: 1rem;
-      padding: 0.4em 0.7em;
-      border: 2px solid var(--ink);
-      background: var(--paper);
-      color: var(--ink);
-      width: 100%;
-      outline: none;
-      filter: url(#sketch);
-      transition: border-color 0.2s;
-    }
-    .sketch-input:focus { border-color: var(--accent); }
-    .sketch-input::placeholder { color: var(--pencil-light); }
-
-    select.sketch-input {
-      cursor: pointer;
-      -webkit-appearance: none;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1410' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.7rem center;
-      padding-right: 2rem;
-    }
-
-    .remove-btn {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      width: 32px; height: 32px;
-      border: 1.5px solid var(--ink);
-      background: transparent;
-      color: var(--accent-red);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      filter: url(#sketch);
-      flex-shrink: 0;
-    }
-    .remove-btn:hover { background: var(--accent-red); color: var(--paper); }
-
-    .result-box {
-      margin-top: 2rem;
-      padding: 1.5rem 2rem;
-      border: 2px solid var(--ink);
-      background: var(--paper-dark);
-      filter: url(#sketch);
-      display: none;
-    }
-    .result-box.visible { display: block; }
-
-    .result-score {
-      font-family: var(--font-display);
-      font-size: 4rem;
-      color: var(--ink);
-      line-height: 1;
-    }
-
-    .result-label {
-      font-family: var(--font-main);
-      font-size: 1rem;
-      color: var(--pencil);
-      margin-top: 0.3rem;
-    }
-
-    .result-grade {
-      display: inline-block;
-      margin-top: 0.8rem;
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      padding: 0.2em 0.8em;
-      border: 2px solid var(--ink);
-      filter: url(#sketch);
-    }
-
-    .grade-O  { background: #2d6b3a; color: var(--paper); }
-    .grade-A  { background: #2d5a8e; color: var(--paper); }
-    .grade-B  { background: #1a1410; color: var(--paper); }
-    .grade-C  { background: #8b7355; color: var(--paper); }
-    .grade-D  { background: #8b2020; color: var(--paper); }
-    .grade-F  { background: #4a0000; color: var(--paper); }
-
-    .sem-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 80px auto;
-      gap: 0.6rem;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .col-label {
-      font-family: var(--font-main);
-      font-size: 0.85rem;
-      color: var(--pencil);
-    }
-
-    @media (max-width: 600px) {
-      .subject-row { grid-template-columns: 1fr 90px; }
-      .subject-row .credits-col,
-      .subject-row .remove-col { display: none; }
-      .sem-row { grid-template-columns: 60px 1fr auto; }
-    }
-  </style>
-  <script>!function(){var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}();</script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>!function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.dataset.theme=t||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}();</script>
 </head>
 <body>
 
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">~/aayush<span>.codes</span></a>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">home</a></li>
-        <li><a href="index.html#about">about</a></li>
-        <li><a href="index.html#projects">projects</a></li>
-        <li><a href="shortcuts.html">shortcuts</a></li>
-        <li><a href="vtu-calculator.html" class="active-nav">vtu calc</a></li>
-        <li><a href="index.html#contact">contact</a></li>
-      </ul>
-      <button class="theme-toggle" aria-label="Toggle dark mode">
-        <span class="icon-moon">🌙</span>
-        <span class="icon-sun">☀️</span>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+  <!-- ─────────── NAV ─────────── -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand" aria-label="Aayush Agrawal, home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        aayushagrawal
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html#work">Work</a></li>
+          <li><a href="index.html#tools" class="active">Tools</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="icon-btn menu-toggle" type="button" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+        </button>
+      </div>
     </div>
-  </nav>
+  </header>
 
-  <main style="padding-top: 90px; padding-bottom: 6rem;">
-    <div class="container">
+  <main>
+    <div class="container page-head">
+      <a href="index.html#tools" class="btn btn-ghost btn-sm back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        All tools
+      </a>
+      <p class="t-label reveal">Calculator</p>
+      <h1 class="t-h1 reveal" style="margin-top: var(--space-3);">VTU GPA<br><span class="serif muted">in a few seconds.</span></h1>
+      <p class="t-lead reveal">Work out your SGPA for one semester, or your CGPA across several, on VTU's 10-point grading scale.</p>
 
-      <!-- Page header -->
-      <div class="fade-up" style="margin-bottom: 2.5rem;">
-        <div class="file-tree" style="margin-bottom: 1.5rem;">
-          <div>📁 <span class="dir">aayushagrawal.codes/</span></div>
-          <div>&nbsp;&nbsp;├── <span class="file">index.html</span></div>
-          <div>&nbsp;&nbsp;├── <span class="file">shortcuts.html</span></div>
-          <div>&nbsp;&nbsp;├── <span class="active tree-file">vtu-calculator.html</span> <span class="comment"># ← you are here</span></div>
-          <div>&nbsp;&nbsp;└── <span class="file">...</span></div>
-        </div>
-        <h1 class="section-title">VTU GPA Calculator</h1>
-        <p style="font-family: var(--font-main); color: var(--ink-faint); font-size: 1.1rem; margin-top: 0.8rem; max-width: 560px;">
-          // Calculate your SGPA per semester or your overall CGPA across semesters. Built for VTU grading system (10-point scale).
-        </p>
+      <div class="grade-scale reveal" style="margin-top: var(--space-8);" aria-label="Grade to grade point">
+        <span class="tag"><b>O</b> 10</span>
+        <span class="tag"><b>A+</b> 9</span>
+        <span class="tag"><b>A</b> 8</span>
+        <span class="tag"><b>B+</b> 7</span>
+        <span class="tag"><b>B</b> 6</span>
+        <span class="tag"><b>C</b> 5</span>
+        <span class="tag"><b>P</b> 4</span>
+        <span class="tag"><b>F</b> 0</span>
+      </div>
+    </div>
+
+    <div class="container page-body">
+      <div class="segmented reveal" role="tablist" aria-label="Calculator type" style="margin-bottom: var(--space-6);">
+        <button type="button" role="tab" id="tab-sgpa" aria-controls="panel-sgpa" aria-selected="true" data-tab="sgpa">SGPA</button>
+        <button type="button" role="tab" id="tab-cgpa" aria-controls="panel-cgpa" aria-selected="false" data-tab="cgpa">CGPA</button>
       </div>
 
-      <!-- Grade reference card -->
-      <div class="fade-up" style="margin-bottom: 2rem;">
-        <div class="sketch-box" style="padding: 1.2rem 1.5rem; background: var(--paper-dark); display: inline-block;">
-          <p style="font-family: var(--font-display); font-size: 0.9rem; color: var(--pencil); margin-bottom: 0.8rem;">// VTU grade → grade point</p>
-          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            <span class="skill-tag" style="--r:0deg;">O = 10</span>
-            <span class="skill-tag" style="--r:0deg;">A+ = 9</span>
-            <span class="skill-tag" style="--r:0deg;">A = 8</span>
-            <span class="skill-tag" style="--r:0deg;">B+ = 7</span>
-            <span class="skill-tag" style="--r:0deg;">B = 6</span>
-            <span class="skill-tag" style="--r:0deg;">C = 5</span>
-            <span class="skill-tag" style="--r:0deg;">P = 4</span>
-            <span class="skill-tag" style="--r:0deg; border-color: var(--accent-red); color: var(--accent-red);">F = 0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tabs -->
-      <div class="fade-up">
-        <div class="calc-tabs">
-          <button class="calc-tab active" onclick="switchTab('sgpa')">SGPA Calculator</button>
-          <button class="calc-tab" onclick="switchTab('cgpa')">CGPA Calculator</button>
-        </div>
-      </div>
-
-      <!-- ── SGPA Panel ── -->
-      <div class="calc-panel active fade-up" id="panel-sgpa" style="max-width: 750px;">
-        <div class="sketch-box" style="padding: 2rem; background: var(--paper);">
-          <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 1.2rem;">// enter your subjects</p>
-
-          <!-- Column labels -->
-          <div class="subject-row" style="margin-bottom: 0.3rem;">
-            <span class="col-label">Subject Name</span>
-            <span class="col-label credits-col">Credits</span>
-            <span class="col-label">Grade</span>
-            <span style="width:32px;"></span>
-          </div>
-
-          <div id="subjects-list"></div>
-
-          <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-            <button class="btn-sketch" onclick="addSubject()">+ Add Subject</button>
-            <button class="btn-sketch filled" onclick="calculateSGPA()">Calculate SGPA</button>
-            <button class="btn-sketch" onclick="clearSGPA()">Clear</button>
-          </div>
-
-          <div class="result-box" id="sgpa-result">
-            <div style="display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-              <div>
-                <div class="result-score" id="sgpa-score">—</div>
-                <div class="result-label">SGPA (Semester GPA)</div>
-                <div class="result-grade" id="sgpa-grade-badge"></div>
-              </div>
-              <div style="font-family: var(--font-main); color: var(--ink-faint); font-size: 0.95rem;" id="sgpa-breakdown"></div>
+      <!-- SGPA -->
+      <div class="calc reveal" id="panel-sgpa" role="tabpanel" aria-labelledby="tab-sgpa">
+        <section class="panel">
+          <p class="t-label">Subjects</p>
+          <div class="calc-rows">
+            <div class="calc-row subject head" aria-hidden="true">
+              <span>Subject</span><span>Credits</span><span>Grade</span><span></span>
             </div>
+            <div class="calc-rows" id="subjects-list"></div>
           </div>
-        </div>
+          <div class="calc-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="sgpa-calc">Calculate SGPA</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sgpa-add">Add subject</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="sgpa-clear">Clear</button>
+          </div>
+          <p class="calc-hint" id="sgpa-hint" role="status"></p>
+        </section>
+
+        <aside class="panel result" aria-live="polite">
+          <p class="t-label">Your SGPA</p>
+          <div class="result-score empty" id="sgpa-score">0.00</div>
+          <span class="tag" id="sgpa-grade">Not calculated yet</span>
+          <div class="result-meter" aria-hidden="true"><span id="sgpa-meter"></span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Grade points</dt><dd id="sgpa-points">—</dd></div>
+            <div class="fact"><dt>Credits</dt><dd id="sgpa-credits">—</dd></div>
+          </dl>
+        </aside>
       </div>
 
-      <!-- ── CGPA Panel ── -->
-      <div class="calc-panel fade-up" id="panel-cgpa" style="max-width: 750px;">
-        <div class="sketch-box" style="padding: 2rem; background: var(--paper);">
-          <p style="font-family: var(--font-display); font-size: 1rem; color: var(--pencil); margin-bottom: 1.2rem;">// enter SGPA for each semester</p>
-
-          <!-- Column labels -->
-          <div class="sem-row" style="margin-bottom: 0.3rem;">
-            <span class="col-label">Sem</span>
-            <span class="col-label">SGPA</span>
-            <span class="col-label">Credits</span>
-            <span style="width:32px;"></span>
-          </div>
-
-          <div id="semesters-list"></div>
-
-          <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-            <button class="btn-sketch" onclick="addSemester()">+ Add Semester</button>
-            <button class="btn-sketch filled" onclick="calculateCGPA()">Calculate CGPA</button>
-            <button class="btn-sketch" onclick="clearCGPA()">Clear</button>
-          </div>
-
-          <div class="result-box" id="cgpa-result">
-            <div style="display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;">
-              <div>
-                <div class="result-score" id="cgpa-score">—</div>
-                <div class="result-label">CGPA (Cumulative GPA)</div>
-                <div class="result-grade" id="cgpa-grade-badge"></div>
-              </div>
-              <div style="font-family: var(--font-main); color: var(--ink-faint); font-size: 0.95rem;" id="cgpa-breakdown"></div>
+      <!-- CGPA -->
+      <div class="calc" id="panel-cgpa" role="tabpanel" aria-labelledby="tab-cgpa" hidden>
+        <section class="panel">
+          <p class="t-label">Semesters</p>
+          <div class="calc-rows">
+            <div class="calc-row semester head" aria-hidden="true">
+              <span>Sem</span><span>SGPA</span><span>Credits</span><span></span>
             </div>
+            <div class="calc-rows" id="semesters-list"></div>
           </div>
-        </div>
-      </div>
+          <div class="calc-actions">
+            <button type="button" class="btn btn-primary btn-sm" id="cgpa-calc">Calculate CGPA</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="cgpa-add">Add semester</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="cgpa-clear">Clear</button>
+          </div>
+          <p class="calc-hint" id="cgpa-hint" role="status"></p>
+        </section>
 
+        <aside class="panel result" aria-live="polite">
+          <p class="t-label">Your CGPA</p>
+          <div class="result-score empty" id="cgpa-score">0.00</div>
+          <span class="tag" id="cgpa-grade">Not calculated yet</span>
+          <div class="result-meter" aria-hidden="true"><span id="cgpa-meter"></span></div>
+          <dl class="facts">
+            <div class="fact"><dt>Grade points</dt><dd id="cgpa-points">—</dd></div>
+            <div class="fact"><dt>Credits</dt><dd id="cgpa-credits">—</dd></div>
+          </dl>
+        </aside>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <div class="container">
-      <p>
-        Designed &amp; coded by <strong>Aayush Agrawal</strong> — with pencil, paper &amp; Python 🖊️
-        &nbsp;·&nbsp; <a href="https://github.aayushagrawal.codes" style="color:var(--accent);text-decoration:none;">@aayushagrawall</a>
-      </p>
+  <!-- ─────────── FOOTER ─────────── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span data-year>2026</span> Aayush Agrawal</span>
+      <div class="footer-links">
+        <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/aayush-agrawall/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
   <script src="assets/js/main.js"></script>
   <script>
-    // ── Grade points map
     const GRADE_POINTS = { 'O': 10, 'A+': 9, 'A': 8, 'B+': 7, 'B': 6, 'C': 5, 'P': 4, 'F': 0 };
-    const GRADE_OPTIONS = Object.keys(GRADE_POINTS);
+    const REMOVE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
-    // ── Tab switching
-    function switchTab(tab) {
-      document.querySelectorAll('.calc-tab').forEach((t, i) => {
-        t.classList.toggle('active', (i === 0 && tab === 'sgpa') || (i === 1 && tab === 'cgpa'));
-      });
-      document.getElementById('panel-sgpa').classList.toggle('active', tab === 'sgpa');
-      document.getElementById('panel-cgpa').classList.toggle('active', tab === 'cgpa');
+    const $ = (id) => document.getElementById(id);
+
+    function el(tag, props) {
+      const node = document.createElement(tag);
+      Object.assign(node, props);
+      return node;
     }
 
-    // ── SGPA
-    let subjectCount = 0;
+    function removeButton(row, label) {
+      const btn = el('button', { type: 'button', className: 'row-remove', innerHTML: REMOVE_ICON });
+      btn.setAttribute('aria-label', label);
+      btn.addEventListener('click', () => { row.remove(); renumberSemesters(); });
+      return btn;
+    }
 
+    // ── Tabs
+    document.querySelectorAll('[role="tab"]').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[role="tab"]').forEach((t) => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', String(on));
+          $('panel-' + t.dataset.tab).hidden = !on;
+        });
+      });
+    });
+
+    // ── SGPA
     function addSubject(name = '', credits = 3, grade = 'O') {
-      subjectCount++;
-      const id = 'sub-' + subjectCount;
-      const list = document.getElementById('subjects-list');
-      const row = document.createElement('div');
-      row.className = 'subject-row';
-      row.id = id;
-      row.innerHTML = `
-        <input class="sketch-input" type="text" placeholder="e.g. Mathematics" value="${name}" />
-        <input class="sketch-input credits-col" type="number" min="1" max="6" value="${credits}" />
-        <select class="sketch-input">
-          ${GRADE_OPTIONS.map(g => `<option value="${g}" ${g === grade ? 'selected' : ''}>${g}</option>`).join('')}
-        </select>
-        <button class="remove-btn remove-col" onclick="document.getElementById('${id}').remove()">×</button>
-      `;
-      list.appendChild(row);
+      const row = el('div', { className: 'calc-row subject' });
+      const nameInput = el('input', { className: 'field', type: 'text', placeholder: 'e.g. Mathematics', value: name });
+      nameInput.setAttribute('aria-label', 'Subject name');
+      const creditInput = el('input', { className: 'field field-num', type: 'number', min: 1, max: 6, value: credits });
+      creditInput.setAttribute('aria-label', 'Credits');
+      const gradeSelect = el('select', { className: 'field' });
+      gradeSelect.setAttribute('aria-label', 'Grade');
+      Object.keys(GRADE_POINTS).forEach((g) => gradeSelect.add(new Option(g, g, false, g === grade)));
+      row.append(nameInput, creditInput, gradeSelect, removeButton(row, 'Remove subject'));
+      $('subjects-list').appendChild(row);
+      return nameInput;
     }
 
     function calculateSGPA() {
-      const rows = document.querySelectorAll('#subjects-list .subject-row');
-      if (!rows.length) { alert('Add at least one subject!'); return; }
-
-      let totalPoints = 0, totalCredits = 0;
-      rows.forEach(row => {
-        const inputs = row.querySelectorAll('input, select');
-        const credits = parseFloat(inputs[1].value) || 3;
-        const grade = inputs[2].value;
-        const gp = GRADE_POINTS[grade] ?? 0;
-        totalPoints += gp * credits;
-        totalCredits += credits;
+      const rows = $('subjects-list').querySelectorAll('.calc-row');
+      if (!rows.length) { $('sgpa-hint').textContent = 'Add at least one subject first.'; return; }
+      let points = 0, credits = 0;
+      rows.forEach((row) => {
+        const [, c, g] = row.querySelectorAll('input, select');
+        const cr = parseFloat(c.value) || 0;
+        points += (GRADE_POINTS[g.value] ?? 0) * cr;
+        credits += cr;
       });
-
-      const sgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-      showResult('sgpa', sgpa, totalPoints, totalCredits);
-    }
-
-    function clearSGPA() {
-      document.getElementById('subjects-list').innerHTML = '';
-      document.getElementById('sgpa-result').classList.remove('visible');
-      subjectCount = 0;
+      showResult('sgpa', credits ? points / credits : 0, points, credits);
     }
 
     // ── CGPA
-    let semCount = 0;
+    function renumberSemesters() {
+      $('semesters-list').querySelectorAll('.sem-label').forEach((s, i) => { s.textContent = 'Sem ' + (i + 1); });
+    }
 
     function addSemester(sgpa = '', credits = 22) {
-      semCount++;
-      const id = 'sem-' + semCount;
-      const list = document.getElementById('semesters-list');
-      const row = document.createElement('div');
-      row.className = 'sem-row';
-      row.id = id;
-      row.innerHTML = `
-        <span style="font-family:var(--font-display);font-size:1rem;color:var(--pencil);">Sem ${semCount}</span>
-        <input class="sketch-input" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.5" value="${sgpa}" />
-        <input class="sketch-input" type="number" min="1" max="30" placeholder="Credits" value="${credits}" />
-        <button class="remove-btn" onclick="document.getElementById('${id}').remove()">×</button>
-      `;
-      list.appendChild(row);
+      const row = el('div', { className: 'calc-row semester' });
+      const label = el('span', { className: 'sem-label' });
+      const sgpaInput = el('input', { className: 'field field-num', type: 'number', min: 0, max: 10, step: 0.01, placeholder: 'e.g. 8.5', value: sgpa });
+      sgpaInput.setAttribute('aria-label', 'SGPA');
+      const creditInput = el('input', { className: 'field field-num', type: 'number', min: 1, max: 30, value: credits });
+      creditInput.setAttribute('aria-label', 'Credits');
+      row.append(label, sgpaInput, creditInput, removeButton(row, 'Remove semester'));
+      $('semesters-list').appendChild(row);
+      renumberSemesters();
+      return sgpaInput;
     }
 
     function calculateCGPA() {
-      const rows = document.querySelectorAll('#semesters-list .sem-row');
-      if (!rows.length) { alert('Add at least one semester!'); return; }
-
-      let totalPoints = 0, totalCredits = 0;
-      rows.forEach(row => {
-        const inputs = row.querySelectorAll('input');
-        const sgpa = parseFloat(inputs[0].value) || 0;
-        const credits = parseFloat(inputs[1].value) || 22;
-        totalPoints += sgpa * credits;
-        totalCredits += credits;
+      const rows = $('semesters-list').querySelectorAll('.calc-row');
+      if (!rows.length) { $('cgpa-hint').textContent = 'Add at least one semester first.'; return; }
+      let points = 0, credits = 0;
+      rows.forEach((row) => {
+        const [s, c] = row.querySelectorAll('input');
+        const cr = parseFloat(c.value) || 0;
+        points += (parseFloat(s.value) || 0) * cr;
+        credits += cr;
       });
-
-      const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-      showResult('cgpa', cgpa, totalPoints, totalCredits);
+      showResult('cgpa', credits ? points / credits : 0, points, credits);
     }
 
-    function clearCGPA() {
-      document.getElementById('semesters-list').innerHTML = '';
-      document.getElementById('cgpa-result').classList.remove('visible');
-      semCount = 0;
+    // ── Shared
+    function gradeName(s) {
+      if (s >= 9) return 'Outstanding';
+      if (s >= 8) return 'Excellent';
+      if (s >= 7) return 'Good';
+      if (s >= 6) return 'Above average';
+      if (s >= 5) return 'Average';
+      if (s >= 4) return 'Pass';
+      return 'Fail';
     }
 
-    // ── Shared result renderer
     function showResult(type, score, points, credits) {
-      const s = parseFloat(score);
-      let gradeName, gradeClass;
-      if (s >= 9)      { gradeName = 'Outstanding (O)';  gradeClass = 'grade-O'; }
-      else if (s >= 8) { gradeName = 'Excellent (A+/A)'; gradeClass = 'grade-A'; }
-      else if (s >= 7) { gradeName = 'Good (B+)';        gradeClass = 'grade-B'; }
-      else if (s >= 6) { gradeName = 'Above Average (B)';gradeClass = 'grade-C'; }
-      else if (s >= 5) { gradeName = 'Average (C)';      gradeClass = 'grade-D'; }
-      else if (s >= 4) { gradeName = 'Pass (P)';         gradeClass = 'grade-D'; }
-      else             { gradeName = 'Fail (F)';          gradeClass = 'grade-F'; }
-
-      document.getElementById(`${type}-score`).textContent = score;
-      const badge = document.getElementById(`${type}-grade-badge`);
-      badge.textContent = gradeName;
-      badge.className = `result-grade ${gradeClass}`;
-      document.getElementById(`${type}-breakdown`).innerHTML =
-        `Total Grade Points: <strong>${points.toFixed(1)}</strong><br>Total Credits: <strong>${credits}</strong>`;
-      const box = document.getElementById(`${type}-result`);
-      box.classList.add('visible');
-      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      $(type + '-hint').textContent = '';
+      const scoreEl = $(type + '-score');
+      scoreEl.textContent = score.toFixed(2);
+      scoreEl.classList.remove('empty');
+      $(type + '-grade').textContent = gradeName(score);
+      $(type + '-meter').style.width = Math.min(score * 10, 100) + '%';
+      $(type + '-points').textContent = points.toFixed(1);
+      $(type + '-credits').textContent = credits;
     }
 
-    // ── Init with default subjects
+    function reset(type) {
+      $(type + '-hint').textContent = '';
+      const scoreEl = $(type + '-score');
+      scoreEl.textContent = '0.00';
+      scoreEl.classList.add('empty');
+      $(type + '-grade').textContent = 'Not calculated yet';
+      $(type + '-meter').style.width = '0';
+      $(type + '-points').textContent = '—';
+      $(type + '-credits').textContent = '—';
+    }
+
+    $('sgpa-add').addEventListener('click', () => addSubject().focus());
+    $('sgpa-calc').addEventListener('click', calculateSGPA);
+    $('sgpa-clear').addEventListener('click', () => { $('subjects-list').replaceChildren(); reset('sgpa'); });
+
+    $('cgpa-add').addEventListener('click', () => addSemester().focus());
+    $('cgpa-calc').addEventListener('click', calculateCGPA);
+    $('cgpa-clear').addEventListener('click', () => { $('semesters-list').replaceChildren(); reset('cgpa'); });
+
+    // ── Starter rows
     addSubject('Mathematics', 4, 'O');
     addSubject('Physics', 3, 'A+');
     addSubject('Programming', 3, 'A');
