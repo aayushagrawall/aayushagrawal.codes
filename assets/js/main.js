@@ -2,175 +2,102 @@
    aayushagrawal.codes — main.js
    ========================================= */
 
-// ── Intersection Observer for fade-up animations
-const fadeEls = document.querySelectorAll('.fade-up');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      e.target.style.transitionDelay = (i * 0.08) + 's';
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-
-fadeEls.forEach(el => observer.observe(el));
-
-// ── Typewriter effect
-function typewriter(el, texts, speed = 80) {
-  let ti = 0, ci = 0, deleting = false;
-
-  function tick() {
-    const text = texts[ti];
-    if (!deleting) {
-      el.textContent = text.slice(0, ++ci);
-      if (ci === text.length) {
-        deleting = true;
-        setTimeout(tick, 1800);
-        return;
-      }
-    } else {
-      el.textContent = text.slice(0, --ci);
-      if (ci === 0) {
-        deleting = false;
-        ti = (ti + 1) % texts.length;
-      }
-    }
-    setTimeout(tick, deleting ? speed / 2 : speed);
-  }
-  tick();
-}
-
-const roleEl = document.getElementById('typed-role');
-if (roleEl) {
-  typewriter(roleEl, [
-    'AIML Student',
-    'Python Dev',
-    'Bot Builder',
-    'Problem Solver',
-    'Open Sourcerer',
-  ]);
-}
-
-// ── Mobile hamburger
-const ham = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
-if (ham) {
-  ham.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
-}
-
-// ── Navbar active link on scroll
-const sections = document.querySelectorAll('section[id]');
-const navItems = document.querySelectorAll('.nav-links a');
-
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY + 120;
-  sections.forEach(sec => {
-    const top = sec.offsetTop;
-    const h = sec.offsetHeight;
-    if (scrollY >= top && scrollY < top + h) {
-      navItems.forEach(a => {
-        a.classList.toggle('active-nav', a.getAttribute('href') === '#' + sec.id);
-      });
-    }
-  });
-}, { passive: true });
-
-// ── Pencil cursor trail
-const canvas = document.createElement('canvas');
-canvas.id = 'trail-canvas';
-Object.assign(canvas.style, {
-  position: 'fixed', inset: '0',
-  pointerEvents: 'none', zIndex: '9998',
-  width: '100vw', height: '100vh',
-});
-document.body.appendChild(canvas);
-
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-const trails = [];
-document.addEventListener('mousemove', (e) => {
-  trails.push({ x: e.clientX, y: e.clientY, alpha: 0.35, life: 1 });
-  if (trails.length > 40) trails.shift();
-});
-
-function renderTrail() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (trails.length > 1) {
-    ctx.beginPath();
-    ctx.moveTo(trails[0].x, trails[0].y);
-    for (let i = 1; i < trails.length; i++) {
-      ctx.lineTo(trails[i].x, trails[i].y);
-    }
-    ctx.strokeStyle = 'rgba(139, 115, 85, 0.18)';
-    ctx.lineWidth = 1.5;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    ctx.stroke();
-  }
-  requestAnimationFrame(renderTrail);
-}
-renderTrail();
-
-// ── File tree current section highlighter
-function updateFileTree() {
-  const scrollY = window.scrollY + 160;
-  const map = {
-    'hero':     'index.html',
-    'about':    'about.html',
-    'projects': 'projects.html',
-    'contact':  'contact.html',
-  };
-  sections.forEach(sec => {
-    const top = sec.offsetTop;
-    const h = sec.offsetHeight;
-    if (scrollY >= top && scrollY < top + h) {
-      document.querySelectorAll('.tree-file').forEach(f => {
-        f.classList.remove('active');
-        if (f.dataset.file === map[sec.id]) f.classList.add('active');
-      });
-    }
-  });
-}
-window.addEventListener('scroll', updateFileTree, { passive: true });
-
-
-// ── Theme toggle ──────────────────────────────────
+// ── Theme: saved choice wins, otherwise follow the OS
 (function () {
-  // Apply saved theme immediately (also done inline in HTML, this is a fallback)
-  const saved = localStorage.getItem('theme');
-  if (saved) document.documentElement.dataset.theme = saved;
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
 
-  function setTheme(theme) {
-    document.documentElement.dataset.theme = theme;
-    localStorage.setItem('theme', theme);
+  function saved() {
+    try { return localStorage.getItem('theme'); } catch (e) { return null; }
   }
 
-  // Wire every toggle button on the page
-  function wireToggles() {
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      // avoid double-binding
-      if (btn.dataset.wired) return;
-      btn.dataset.wired = '1';
-      btn.addEventListener('click', () => {
-        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-        setTheme(next);
-      });
+  function apply(theme) { root.dataset.theme = theme; }
+
+  apply(saved() || (media.matches ? 'dark' : 'light'));
+
+  media.addEventListener('change', (e) => {
+    if (!saved()) apply(e.matches ? 'dark' : 'light');
+  });
+
+  document.querySelectorAll('.theme-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      apply(next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
     });
+  });
+})();
+
+// ── Nav: border on scroll + mobile menu
+(function () {
+  const nav = document.querySelector('.nav');
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.getElementById('nav-links');
+
+  if (nav) {
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  // Wire on DOM ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', wireToggles);
-  } else {
-    wireToggles();
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    links.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
   }
 })();
+
+// ── Active section in nav
+(function () {
+  const items = document.querySelectorAll('.nav-links a[href^="#"]');
+  if (!items.length || !('IntersectionObserver' in window)) return;
+
+  const byId = {};
+  items.forEach((a) => { byId[a.getAttribute('href').slice(1)] = a; });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      items.forEach((a) => a.classList.remove('active'));
+      const hit = byId[e.target.id];
+      if (hit) hit.classList.add('active');
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+
+  Object.keys(byId).forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+})();
+
+// ── Reveal on scroll
+(function () {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+  els.forEach((el, i) => {
+    if (el.dataset.delay) el.style.transitionDelay = el.dataset.delay + 'ms';
+    io.observe(el);
+  });
+})();
+
+// ── Footer year
+document.querySelectorAll('[data-year]').forEach((el) => {
+  el.textContent = new Date().getFullYear();
+});

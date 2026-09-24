@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <rect x="2" y="2" width="96" height="96" rx="4" fill="#1a1410"/>
-  <line x1="20" y1="82" x2="50" y2="15" stroke="#f5f0e8" stroke-width="5.5" stroke-linecap="round"/>
-  <line x1="80" y1="82" x2="50" y2="15" stroke="#f5f0e8" stroke-width="5.5" stroke-linecap="round"/>
-  <line x1="30" y1="58" x2="70" y2="58" stroke="#f5f0e8" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="50" cy="87" r="3.5" fill="#f5f0e8" opacity="0.7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>.b{fill:#0c0c0c}.t{fill:#fafaf9}@media (prefers-color-scheme:dark){.b{fill:#ededec}.t{fill:#0b0b0c}}</style>
+  <rect class="b" width="32" height="32" rx="8"/>
+  <text class="t" x="7" y="22.5" font-family="ui-sans-serif,system-ui,-apple-system,sans-serif" font-size="17" font-weight="600" letter-spacing="-1">a</text>
+  <circle cx="23" cy="20" r="3" fill="#ff5a1f"/>
 </svg>

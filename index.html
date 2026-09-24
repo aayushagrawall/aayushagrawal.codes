@@ -2,414 +2,315 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aayush Agrawal — aayushagrawal.codes</title>
-  <meta name="description" content="Aayush Agrawal — AIML Student at BMS College of Engineering, Bangalore. Developer, builder, open-source contributor." />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <title>Aayush Agrawal — AI &amp; ML student, developer</title>
+  <meta name="description" content="Aayush Agrawal — AI &amp; ML student at BMS College of Engineering, Bangalore. I build small, useful software: Python tools, Discord bots and the web." />
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+  <meta property="og:title" content="Aayush Agrawal" />
+  <meta property="og:description" content="AI &amp; ML student at BMS College of Engineering. I build small, useful software." />
+  <meta property="og:url" content="https://aayushagrawal.codes" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Sketch SVG filters — must be first -->
-  <svg id="svg-filters" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <!-- Hand-drawn / sketch distortion -->
-      <filter id="sketch" x="-5%" y="-5%" width="110%" height="110%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.018 0.022" numOctaves="2" seed="3" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-      <!-- Pencil texture on SVG illustrations -->
-      <filter id="pencil" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" seed="7" result="noise"/>
-        <feComposite in="SourceGraphic" in2="noise" operator="in" result="tex"/>
-        <feBlend in="SourceGraphic" in2="tex" mode="multiply"/>
-      </filter>
-      <!-- Squiggly underline -->
-      <filter id="squiggle" x="-5%" y="-80%" width="110%" height="300%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="2" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <style>
-    /* Inline critical CSS for active nav link */
-    .nav-links a.active-nav {
-      color: var(--ink);
-      font-weight: 700;
-    }
-    .nav-links a.active-nav::after {
-      transform: scaleX(1);
-    }
-  </style>
-  <script>!function(){var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}();</script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>!function(){var t;try{t=localStorage.getItem("theme")}catch(e){}document.documentElement.dataset.theme=t||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}();</script>
 </head>
 <body>
 
-  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">~/aayushagrawal<span>.codes</span></a>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#hero">home</a></li>
-        <li><a href="#about">about</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="shortcuts.html">shortcuts</a></li>
-        <li><a href="vtu-calculator.html">vtu calc</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
-      <button class="theme-toggle" aria-label="Toggle dark mode">
-        <span class="icon-moon">🌙</span>
-        <span class="icon-sun">☀️</span>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+  <!-- ─────────── NAV ─────────── -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="Aayush Agrawal, home">
+        <span class="brand-dot" aria-hidden="true"></span>
+        aayushagrawal
+      </a>
 
-  <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section id="hero">
-    <div class="container">
-      <div class="hero-inner">
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#tools">Tools</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
 
-        <div class="hero-text">
-          <!-- Floating file tree — the "coding look" -->
-          <div class="file-tree fade-up" style="margin-bottom:2rem;">
-            <div>📁 <span class="dir">aayushagrawal.codes/</span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file active" data-file="index.html">index.html</span> <span class="comment"># ← you are here</span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file" data-file="about.html">about.html</span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file" data-file="projects.html">projects.html</span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file" data-file="contact.html">contact.html</span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file" data-file="shortcuts.html"><a href="shortcuts.html" style="color:inherit;text-decoration:none;">shortcuts.html</a></span></div>
-            <div>&nbsp;&nbsp;├── <span class="tree-file" data-file="vtu-calculator.html"><a href="vtu-calculator.html" style="color:inherit;text-decoration:none;">vtu-calculator.html</a></span></div>
-            <div>&nbsp;&nbsp;├── 📁 <span class="dir">assets/</span></div>
-            <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── 📁 <span class="dir">css/</span></div>
-            <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="file">style.css</span></div>
-            <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── 📁 <span class="dir">js/</span></div>
-            <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="file">main.js</span></div>
-            <div>&nbsp;&nbsp;└── <span class="file">README.md</span></div>
-          </div>
-
-          <span class="hero-greeting fade-up">Hey there 👋, I'm</span>
-          <h1 class="hero-name fade-up">Aayush<br><em>Agrawal</em></h1>
-          <p class="hero-role fade-up">
-            <span class="tag" id="typed-role">AIML Student</span>
-            <span class="typed-cursor"></span>
-            &nbsp;@ BMS College of Engineering
-          </p>
-          <p class="hero-desc fade-up">
-            A passionate developer who builds things with code — from Python scripts
-            to Discord bots to full-blown web apps. Always learning, always shipping.
-          </p>
-          <div class="hero-links fade-up">
-            <a href="#projects" class="btn-sketch filled">View Projects</a>
-            <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener" class="btn-sketch">GitHub</a>
-            <a href="https://np.linkedin.com/in/aayush-agrawall" target="_blank" rel="noopener" class="btn-sketch">LinkedIn</a>
-          </div>
-        </div>
-
-        <!-- Hand-drawn laptop / code doodle -->
-        <div class="hero-doodle fade-up">
-          <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" filter="url(#pencil)">
-            <!-- laptop body -->
-            <rect x="30" y="50" width="220" height="150" rx="8" fill="none" stroke="#1a1410" stroke-width="3"/>
-            <rect x="38" y="58" width="204" height="134" rx="4" fill="#ede7d4" stroke="#1a1410" stroke-width="1.5"/>
-            <!-- stand -->
-            <path d="M20 200 L260 200 L240 220 L40 220 Z" fill="none" stroke="#1a1410" stroke-width="3"/>
-            <!-- hinge line -->
-            <line x1="20" y1="200" x2="260" y2="200" stroke="#1a1410" stroke-width="2"/>
-
-            <!-- code lines on screen -->
-            <line x1="55" y1="80" x2="110" y2="80" stroke="#2d5a8e" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="55" y1="93" x2="90" y2="93" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
-            <line x1="65" y1="106" x2="130" y2="106" stroke="#1a1410" stroke-width="2" stroke-linecap="round"/>
-            <line x1="65" y1="119" x2="115" y2="119" stroke="#2d6b3a" stroke-width="2" stroke-linecap="round"/>
-            <line x1="55" y1="132" x2="95" y2="132" stroke="#8b2020" stroke-width="2" stroke-linecap="round"/>
-            <line x1="65" y1="145" x2="140" y2="145" stroke="#1a1410" stroke-width="2" stroke-linecap="round"/>
-            <line x1="65" y1="158" x2="120" y2="158" stroke="#2d5a8e" stroke-width="2" stroke-linecap="round"/>
-            <line x1="55" y1="171" x2="100" y2="171" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
-
-            <!-- blinking cursor on screen -->
-            <rect x="142" y="145" width="2" height="14" fill="#1a1410">
-              <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
-            </rect>
-
-            <!-- small doodle stars around -->
-            <text x="200" y="75" font-family="serif" font-size="18" fill="#c4a882" transform="rotate(-10,200,75)">✦</text>
-            <text x="240" y="130" font-family="serif" font-size="12" fill="#c4a882" transform="rotate(15,240,130)">✦</text>
-            <text x="25" y="130" font-family="serif" font-size="14" fill="#c4a882" transform="rotate(-8,25,130)">✦</text>
-
-            <!-- "hello world" annotation -->
-            <text x="160" y="95" font-family="'Caveat', cursive" font-size="13" fill="#6b5d52" transform="rotate(5,160,95)">// hello world!</text>
-
-            <!-- arrow annotation -->
-            <path d="M195 170 Q220 180 235 165" fill="none" stroke="#8b7355" stroke-width="1.5" stroke-dasharray="4 2"/>
-            <text x="195" y="188" font-family="'Caveat', cursive" font-size="11" fill="#8b7355">AI stuff here</text>
-
-            <!-- coffee cup doodle -->
-            <g transform="translate(185,60)">
-              <rect x="0" y="8" width="22" height="22" rx="3" fill="none" stroke="#1a1410" stroke-width="2"/>
-              <path d="M22 14 Q30 14 30 20 Q30 26 22 26" fill="none" stroke="#1a1410" stroke-width="2"/>
-              <path d="M6 4 Q8 0 10 4" fill="none" stroke="#8b7355" stroke-width="1.5"/>
-              <path d="M13 2 Q15 -2 17 2" fill="none" stroke="#8b7355" stroke-width="1.5"/>
-            </g>
-          </svg>
-        </div>
-
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="icon-btn menu-toggle" type="button" aria-label="Open menu" aria-controls="nav-links" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg>
+        </button>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- ═══════════════════ ABOUT ═══════════════════ -->
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title fade-up">about.html</h2>
+  <main id="top">
 
-      <div class="about-grid">
-        <div class="about-text fade-up">
-          <div class="notebook-lines" style="margin-bottom: 2rem;">
-            <div class="nb-row"><span class="nb-label">name</span><span class="nb-value">Aayush Agrawal</span></div>
-            <div class="nb-row"><span class="nb-label">degree</span><span class="nb-value">B.E. — AI &amp; ML</span></div>
-            <div class="nb-row"><span class="nb-label">college</span><span class="nb-value">BMS College of Engineering</span></div>
-            <div class="nb-row"><span class="nb-label">location</span><span class="nb-value">Bangalore, India 📍</span></div>
-            <div class="nb-row"><span class="nb-label">status</span><span class="nb-value">Undergraduate Student 🎓</span></div>
-            <div class="nb-row"><span class="nb-label">org</span><span class="nb-value">@clienterrverse</span></div>
-            <div class="nb-row"><span class="nb-label">email</span><span class="nb-value">aayush@aayushagrawal.codes</span></div>
-          </div>
-
-          <p>
-            I'm an undergraduate AIML student with a love for building things from scratch.
-            Whether it's a quick Python utility, a Discord bot for a community,
-            or diving deep into machine learning concepts — I enjoy the craft.
-          </p>
-          <p>
-            Currently a member of <strong>@clienterrverse</strong>, exploring open-source
-            collaboration and learning how real-world software gets built.
-          </p>
-          <p>
-            When I'm not coding, I'm probably reading docs, breaking things intentionally,
-            or brewing ideas that'll become the next side project.
-          </p>
+    <!-- ─────────── HERO ─────────── -->
+    <section class="hero">
+      <div class="container">
+        <div class="status reveal">
+          <span class="status-dot" aria-hidden="true"></span>
+          Open to internships &amp; collaborations
         </div>
 
-        <div class="fade-up">
-          <!-- Skills section styled like a sticky note -->
-          <div class="sketch-box" style="padding: 1.5rem; background: var(--paper-dark); margin-bottom: 1.5rem;">
-            <p style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem; color: var(--ink);">
-              // languages &amp; tools
-            </p>
-            <div class="skills-list">
-              <span class="skill-tag">Python</span>
-              <span class="skill-tag">JavaScript</span>
-              <span class="skill-tag">Java</span>
-              <span class="skill-tag">C</span>
-              <span class="skill-tag">HTML5</span>
-              <span class="skill-tag">CSS3</span>
-              <span class="skill-tag">Node.js</span>
-              <span class="skill-tag">Machine Learning</span>
-              <span class="skill-tag">Git</span>
-              <span class="skill-tag">Heroku</span>
-              <span class="skill-tag">Discord.js</span>
-              <span class="skill-tag">QR Codes 😄</span>
-            </div>
-          </div>
+        <h1 class="t-display hero-title reveal" data-delay="60">
+          Aayush Agrawal<span class="serif">, builds small useful things.</span>
+        </h1>
 
-          <!-- Stats doodle -->
-          <div class="sketch-box" style="padding: 1.5rem; background: var(--paper);">
-            <p style="font-family: var(--font-display); font-size: 1rem; margin-bottom: 1rem; color: var(--pencil);">
-              // github stats
-            </p>
-            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-              <div style="text-align: center;">
-                <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--ink);">7</div>
-                <div style="font-family: var(--font-main); font-size: 0.9rem; color: var(--pencil);">repositories</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--ink);">2</div>
-                <div style="font-family: var(--font-main); font-size: 0.9rem; color: var(--pencil);">achievements</div>
-              </div>
-              <div style="text-align: center;">
-                <div style="font-family: var(--font-display); font-size: 2.5rem; color: var(--ink);">∞</div>
-                <div style="font-family: var(--font-main); font-size: 0.9rem; color: var(--pencil);">curiosity</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <p class="t-lead hero-lead reveal" data-delay="120">
+          AI &amp; ML student at BMS College of Engineering, Bangalore. I write Python
+          tools, Discord bots and websites, and I'm learning how real software gets built
+          through open source.
+        </p>
 
-  <!-- ═══════════════════ PROJECTS ═══════════════════ -->
-  <section id="projects">
-    <div class="container">
-      <div class="projects-header fade-up">
-        <h2 class="section-title">projects.html</h2>
-        <span class="projects-meta">// things I've built &amp; shipped</span>
-      </div>
-
-      <div class="projects-grid">
-
-        <!-- Project 1: QR Code Generator -->
-        <div class="project-card fade-up">
-          <div class="pin"></div>
-          <span class="card-num">01</span>
-          <h3>QR Code Generator</h3>
-          <div class="project-lang">
-            <span style="background:#3572A5;" class="project-lang" style="display:inline-flex;align-items:center;gap:.4rem;">
-              <span style="width:10px;height:10px;border-radius:50%;background:#3572A5;display:inline-block;"></span>
-              Python
-            </span>
-          </div>
-          <p>A clean, simple QR code generator built with Python. Input any URL or text and get a scannable QR code — fast and no-frills.</p>
-          <a href="https://github.com/aayushagrawall/QR-Code-Generator" target="_blank" rel="noopener" class="card-link">→ github.com/aayushagrawall/QR-Code-Generator</a>
-        </div>
-
-        <!-- Project 2: Clienterrverse Bot -->
-        <div class="project-card fade-up">
-          <div class="pin" style="background: var(--accent);"></div>
-          <span class="card-num">02</span>
-          <h3>clienterrverse-bot</h3>
-          <div class="project-lang">
-            <span style="display:inline-flex;align-items:center;gap:.4rem;">
-              <span style="width:10px;height:10px;border-radius:50%;background:#f1e05a;display:inline-block;"></span>
-              JavaScript
-            </span>
-          </div>
-          <p>Clienterrverse's community Discord server bot. Full-featured moderation and utility commands for the server ecosystem.</p>
-          <a href="https://github.com/aayushagrawall/clienterrverse-bot" target="_blank" rel="noopener" class="card-link">→ github.com/aayushagrawall/clienterrverse-bot</a>
-        </div>
-
-        <!-- Project 3: clienterr.com -->
-        <div class="project-card fade-up">
-          <div class="pin" style="background: var(--accent-green);"></div>
-          <span class="card-num">03</span>
-          <h3>clienterr.com</h3>
-          <div class="project-lang">
-            <span style="display:inline-flex;align-items:center;gap:.4rem;">
-              <span style="width:10px;height:10px;border-radius:50%;background:#f1e05a;display:inline-block;"></span>
-              JavaScript
-            </span>
-          </div>
-          <p>Source code for the Clienterrverse website. A collaborative web project built with the open-source community.</p>
-          <a href="https://github.com/aayushagrawall/clienterr.com" target="_blank" rel="noopener" class="card-link">→ github.com/aayushagrawall/clienterr.com</a>
-        </div>
-
-        <!-- Project 4: Typing Test -->
-        <div class="project-card fade-up">
-          <div class="pin" style="background: #b5651d;"></div>
-          <span class="card-num">04</span>
-          <h3>Typing Test (Python)</h3>
-          <div class="project-lang">
-            <span style="display:inline-flex;align-items:center;gap:.4rem;">
-              <span style="width:10px;height:10px;border-radius:50%;background:#3572A5;display:inline-block;"></span>
-              Python
-            </span>
-          </div>
-          <p>A Python typing test project from 1st semester — measures speed and accuracy. Clean, terminal-based fun little tool.</p>
-          <a href="https://github.com/aayushagrawall/Typing-Test-using-Python" target="_blank" rel="noopener" class="card-link">→ github.com/aayushagrawall/Typing-Test-using-Python</a>
-        </div>
-
-                <!-- Project 5: GitHub Profile -->
-        <div class="project-card fade-up">
-          <div class="pin" style="background: #1a1410;"></div>
-          <span class="card-num">05</span>
-          <h3>GitHub Profile README</h3>
-          <div class="project-lang">
-            <span style="display:inline-flex;align-items:center;gap:.4rem;">
-              <span style="width:10px;height:10px;border-radius:50%;background:#e34c26;display:inline-block;"></span>
-              Markdown
-            </span>
-          </div>
-          <p>A custom GitHub profile README with Pac-Man contribution graph, top languages, and social links. Also: "Who am I?"</p>
-          <a href="https://github.com/aayushagrawall/aayushagrawall" target="_blank" rel="noopener" class="card-link">→ github.com/aayushagrawall/aayushagrawall</a>
-        </div>
-
-        <!-- View all card -->
-        <div class="project-card fade-up" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-style: dashed; min-height: 200px;">
-          <span style="font-family: var(--font-display); font-size: 3rem; color: var(--pencil-light); display:block; margin-bottom: 0.5rem;">+</span>
-          <p style="color: var(--pencil); min-height: unset;">More projects on GitHub</p>
-          <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener" class="btn-sketch" style="margin-top: 1rem;">
-            View All Repos →
+        <div class="hero-actions reveal" data-delay="180">
+          <a href="#work" class="btn btn-primary">
+            See my work
+            <svg class="arrow-e" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener" class="btn btn-secondary">
+            GitHub
+            <svg class="arrow-ne" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
           </a>
         </div>
 
+        <dl class="hero-meta reveal" data-delay="240">
+          <div>
+            <dt class="t-label">Based in</dt>
+            <dd>Bangalore, India</dd>
+          </div>
+          <div>
+            <dt class="t-label">Studying</dt>
+            <dd>B.E. Artificial Intelligence &amp; ML</dd>
+          </div>
+          <div>
+            <dt class="t-label">Email</dt>
+            <dd><a href="mailto:aayush@aayushagrawal.codes">aayush@aayushagrawal.codes</a></dd>
+          </div>
+        </dl>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══════════════════ CONTACT ═══════════════════ -->
-  <section id="contact">
-    <div class="container">
-      <h2 class="section-title fade-up">contact.html</h2>
+    <!-- ─────────── WORK ─────────── -->
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="t-label">01 — Work</span>
+          <h2 class="t-h1">Selected projects</h2>
+        </div>
 
-      <div class="contact-inner">
+        <ol class="work-list">
+          <li class="reveal">
+            <a class="work-row" href="https://github.com/aayushagrawall/QR-Code-Generator" target="_blank" rel="noopener">
+              <span class="work-num">01</span>
+              <span class="work-title">QR Code Generator</span>
+              <span class="work-desc">Turn any URL or text into a scannable QR code. Fast and no-frills.</span>
+              <span class="work-end">
+                <span class="tag tag-dot" style="--dot:#3572A5">Python</span>
+                <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="work-row" href="https://github.com/aayushagrawall/clienterrverse-bot" target="_blank" rel="noopener">
+              <span class="work-num">02</span>
+              <span class="work-title">clienterrverse-bot</span>
+              <span class="work-desc">The Clienterrverse community's Discord bot, with moderation and utility commands.</span>
+              <span class="work-end">
+                <span class="tag tag-dot" style="--dot:#e5c400">JavaScript</span>
+                <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="work-row" href="https://github.com/aayushagrawall/clienterr.com" target="_blank" rel="noopener">
+              <span class="work-num">03</span>
+              <span class="work-title">clienterr.com</span>
+              <span class="work-desc">Source for the Clienterrverse website, built together with the open-source community.</span>
+              <span class="work-end">
+                <span class="tag tag-dot" style="--dot:#e5c400">JavaScript</span>
+                <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="work-row" href="https://github.com/aayushagrawall/Typing-Test-using-Python" target="_blank" rel="noopener">
+              <span class="work-num">04</span>
+              <span class="work-title">Typing Test</span>
+              <span class="work-desc">A terminal typing test that measures speed and accuracy. My first-semester project.</span>
+              <span class="work-end">
+                <span class="tag tag-dot" style="--dot:#3572A5">Python</span>
+                <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a class="work-row" href="https://github.com/aayushagrawall/aayushagrawall" target="_blank" rel="noopener">
+              <span class="work-num">05</span>
+              <span class="work-title">GitHub Profile README</span>
+              <span class="work-desc">A custom profile with a Pac-Man contribution graph, top languages and links.</span>
+              <span class="work-end">
+                <span class="tag tag-dot" style="--dot:#e34c26">Markdown</span>
+                <svg class="work-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+              </span>
+            </a>
+          </li>
+        </ol>
 
-        <div class="contact-text fade-up">
-          <p style="font-family: var(--font-main); font-size: 1.2rem; margin-bottom: 1rem; color: var(--ink);">
-            // let's connect!
-          </p>
-          <p>
-            Whether you want to collaborate on a project, talk about AI/ML,
-            discuss open source, or just say hi — my inbox is always open.
-          </p>
-          <p>
-            I'm currently open to interesting projects, internship opportunities,
-            and anything involving Python or building cool things.
-          </p>
+        <div class="work-more reveal">
+          <p class="muted t-small">More experiments and forks live on GitHub.</p>
+          <a href="https://github.com/aayushagrawall?tab=repositories" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">
+            All repositories
+            <svg class="arrow-ne" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
 
-          <div class="contact-links" style="margin-top: 1.5rem;">
-            <a href="mailto:aayush@aayushagrawal.codes" class="contact-link-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              aayush@aayushagrawal.codes
-              <span class="icon-label">email</span>
-            </a>
-            <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener" class="contact-link-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-              github.com/aayushagrawall
-              <span class="icon-label">github</span>
-            </a>
-            <a href="https://www.linkedin.com/in/aayush-agrawall/" target="_blank" rel="noopener" class="contact-link-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              linkedin.com.in/aayush-agrawall
-              <span class="icon-label">linkedin</span>
-            </a>
-            <a href="https://instagram.com/_aayush.agrawal" target="_blank" rel="noopener" class="contact-link-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              instagram.com/_aayush.agrawal
-              <span class="icon-label">instagram</span>
-            </a>
+    <!-- ─────────── TOOLS ─────────── -->
+    <section class="section" id="tools">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="t-label">02 — Tools</span>
+          <h2 class="t-h1">Things you can use today</h2>
+        </div>
+
+        <div class="card-grid">
+          <a class="card reveal" href="vtu-calculator.html">
+            <div class="card-top">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg>
+              </span>
+              <span class="tag">Web</span>
+            </div>
+            <h3 class="t-h2">VTU GPA Calculator</h3>
+            <p>Work out your SGPA for a semester, or your CGPA across semesters, on VTU's 10-point scale.</p>
+            <span class="card-foot">
+              Open calculator
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <a class="card reveal" data-delay="80" href="shortcuts.html">
+            <div class="card-top">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+              </span>
+              <span class="tag">iOS Shortcut</span>
+            </div>
+            <h3 class="t-h2">Attendance Calculator</h3>
+            <p>An iPhone Shortcut that tells you how many classes you can skip, or must attend, to stay above 85%.</p>
+            <span class="card-foot">
+              View shortcut
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────── ABOUT ─────────── -->
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <span class="t-label reveal" style="padding-top:6px">03 — About</span>
+
+        <div>
+          <h2 class="t-h1 reveal">A student who likes<br><span class="serif muted">shipping things.</span></h2>
+
+          <div class="about-body" style="margin-top: var(--space-12);">
+            <div class="prose reveal">
+              <p>
+                I'm an undergraduate in AI &amp; Machine Learning who enjoys building things
+                from scratch: a quick Python utility, a Discord bot for a community, or a
+                long dig into how a model actually learns.
+              </p>
+              <p>
+                I'm a member of <strong>@clienterrverse</strong>, where I work on open-source
+                projects with other developers and learn how real-world software is made.
+              </p>
+              <p>
+                When I'm not coding I'm reading docs, taking things apart to see how they
+                work, and collecting ideas for the next side project.
+              </p>
+            </div>
+
+            <div class="reveal" data-delay="80">
+              <dl class="facts">
+                <div class="fact"><dt>Degree</dt><dd>B.E. AI &amp; ML</dd></div>
+                <div class="fact"><dt>College</dt><dd>BMS College of Engineering</dd></div>
+                <div class="fact"><dt>Location</dt><dd>Bangalore, India</dd></div>
+                <div class="fact"><dt>Community</dt><dd>@clienterrverse</dd></div>
+              </dl>
+
+              <div class="stack">
+                <p class="t-label">Tools I use</p>
+                <div class="tag-list">
+                  <span class="tag">Python</span>
+                  <span class="tag">JavaScript</span>
+                  <span class="tag">Java</span>
+                  <span class="tag">C</span>
+                  <span class="tag">HTML &amp; CSS</span>
+                  <span class="tag">Node.js</span>
+                  <span class="tag">Discord.js</span>
+                  <span class="tag">Machine Learning</span>
+                  <span class="tag">Git</span>
+                  <span class="tag">Heroku</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="doodle-note fade-up">
-          <p>
-            I'm Aayush — an AIML undergrad who loves building things.<br><br>
-            Currently deep in: <strong>machine learning</strong>, open-source,
-            and figuring out what to build next.<br><br>
-            Drop me a line anytime ✉️
-          </p>
-          <span class="email-big">aayush@aayushagrawal.codes</span>
-
-          <!-- hand drawn arrow doodle -->
-          <svg style="position:absolute;bottom:1rem;right:1rem;opacity:0.3;" width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <path d="M10 50 Q20 20 45 15" stroke="#1a1410" stroke-width="2" stroke-dasharray="5 3" fill="none"/>
-            <polygon points="45,10 42,20 52,18" fill="#1a1410"/>
-          </svg>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══════════════════ FOOTER ═══════════════════ -->
-  <footer>
-    <div class="container">
-      <p>
-        Designed &amp; coded by <strong>Aayush Agrawal</strong> — with pencil, paper &amp; Python 🖊️
-        &nbsp;·&nbsp; <a href="https://github.com/aayushagrawall" style="color:var(--accent);text-decoration:none;">@aayushagrawall</a>
-        &nbsp;·&nbsp; aayushagrawal.codes
-      </p>
+    <!-- ─────────── CONTACT ─────────── -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <span class="t-label reveal">04 — Contact</span>
+        <h2 class="t-display reveal" style="margin-top: var(--space-6); max-width: 12ch;">
+          Let's build <span class="serif muted">something.</span>
+        </h2>
+        <p class="t-lead reveal" style="margin-top: var(--space-6); max-width: 520px;">
+          Want to collaborate, talk about AI and ML, or just say hi? My inbox is open.
+          I'm looking for internships and interesting projects.
+        </p>
+
+        <a href="mailto:aayush@aayushagrawal.codes" class="contact-mail reveal">
+          aayush@aayushagrawal.codes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+        </a>
+
+        <div class="socials reveal">
+          <a class="btn btn-secondary btn-sm" href="https://github.com/aayushagrawall" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.51 2.87 8.34 6.84 9.69.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.46-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.85.09-.66.35-1.12.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.82c0 .27.18.6.69.49A10.1 10.1 0 0 0 22 12.23C22 6.58 17.52 2 12 2z"/></svg>
+            GitHub
+          </a>
+          <a class="btn btn-secondary btn-sm" href="https://www.linkedin.com/in/aayush-agrawall/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn
+          </a>
+          <a class="btn btn-secondary btn-sm" href="https://instagram.com/_aayush.agrawal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─────────── FOOTER ─────────── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span data-year>2026</span> Aayush Agrawal</span>
+      <div class="footer-links">
+        <a href="https://github.com/aayushagrawall" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/aayush-agrawall/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#top">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
