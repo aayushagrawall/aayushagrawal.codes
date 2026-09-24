@@ -8,9 +8,9 @@ Personal portfolio website: minimal, typographic, light and dark.
 aayushagrawal.codes/
 ├── index.html            # Home: hero, work, tools, about, contact
 ├── shortcuts.html        # iOS Shortcuts (Attendance Calculator)
-├── vtu-calculator.html   # VTU SGPA / CGPA calculator
 ├── favicon.svg
 └── assets/
+    ├── docs/             # Resume PDF
     ├── css/style.css     # Design tokens + all components
     └── js/main.js        # Theme, nav, scroll reveal
 ```
