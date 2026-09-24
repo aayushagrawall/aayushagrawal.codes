@@ -225,6 +225,13 @@ button, input, select { font: inherit; color: inherit; }
 .nav-links a[aria-current="page"],
 .nav-links a.active { color: var(--ink); }
 
+.nav-links a.nav-cta {
+  margin-left: var(--space-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+.nav-links a.nav-cta:hover { border-color: var(--ink-subtle); }
+
 .nav-actions { display: flex; align-items: center; gap: var(--space-2); }
 
 .icon-btn {
@@ -390,7 +397,7 @@ button, input, select { font: inherit; color: inherit; }
 
 .work-row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1.1fr) minmax(0, 1.6fr) auto;
+  grid-template-columns: 48px minmax(0, 1.1fr) minmax(0, 1.6fr) 150px;
   gap: var(--space-6);
   align-items: center;
   padding: var(--space-6) var(--space-4);
@@ -522,7 +529,7 @@ a.card:hover .card-foot svg { transform: translateX(3px); }
   align-items: center;
   gap: var(--space-4);
   margin-top: var(--space-8);
-  font-size: clamp(22px, 4vw, 40px);
+  font-size: clamp(18px, 5vw, 40px);
   font-weight: 500;
   letter-spacing: -0.03em;
   border-bottom: 1px solid var(--line-strong);
@@ -822,6 +829,7 @@ select.field {
   }
   .nav-links.open { display: flex; }
   .nav-links a { display: block; padding: 12px; border-radius: var(--radius-md); font-size: 16px; }
+  .nav-links a.nav-cta { margin: var(--space-2) 0 0; text-align: center; border-radius: var(--radius-full); }
   .card-grid { grid-template-columns: 1fr; }
   .card { padding: var(--space-6); }
   .hero-meta { grid-template-columns: 1fr; gap: var(--space-4); }
@@ -832,4 +840,8 @@ select.field {
   .calc-row.semester { grid-template-columns: 52px minmax(0, 1fr) 72px 36px; }
   .row-remove { width: 36px; }
   .product-head { flex-direction: column; gap: var(--space-4); }
+}
+
+@media (max-width: 350px) {
+  .contact-mail { font-size: 16px; }
 }
