@@ -16,6 +16,7 @@
   --ink-subtle:  #6f6e68;
   --line:        #e6e5e1;
   --line-strong: #cfcdc7;
+  --line-field:  #8f8e87;
   --accent:      #ff5a1f;
   --accent-ink:  #c2410c;
   --on-accent:   #0c0c0c;
@@ -36,6 +37,7 @@
   --ink-subtle:  #8c8b86;
   --line:        #242427;
   --line-strong: #3a3a3e;
+  --line-field:  #636368;
   --accent:      #ff6b35;
   --accent-ink:  #ff8a5c;
   --on-accent:   #0b0b0c;
@@ -679,7 +681,7 @@ a.card:hover .card-foot svg { transform: translateX(3px); }
   height: 42px;
   padding: 0 12px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line-field);
   background: var(--bg);
   color: var(--ink);
   font-size: 15px;
@@ -688,7 +690,7 @@ a.card:hover .card-foot svg { transform: translateX(3px); }
 }
 
 .field::placeholder { color: var(--ink-subtle); }
-.field:hover { border-color: var(--ink-subtle); }
+.field:hover { border-color: var(--ink-muted); }
 .field:focus {
   border-color: var(--focus);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
