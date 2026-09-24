@@ -225,6 +225,13 @@ button, input, select { font: inherit; color: inherit; }
 .nav-links a[aria-current="page"],
 .nav-links a.active { color: var(--ink); }
 
+.nav-links a.nav-cta {
+  margin-left: var(--space-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+.nav-links a.nav-cta:hover { border-color: var(--ink-subtle); }
+
 .nav-actions { display: flex; align-items: center; gap: var(--space-2); }
 
 .icon-btn {
@@ -822,6 +829,7 @@ select.field {
   }
   .nav-links.open { display: flex; }
   .nav-links a { display: block; padding: 12px; border-radius: var(--radius-md); font-size: 16px; }
+  .nav-links a.nav-cta { margin: var(--space-2) 0 0; text-align: center; border-radius: var(--radius-full); }
   .card-grid { grid-template-columns: 1fr; }
   .card { padding: var(--space-6); }
   .hero-meta { grid-template-columns: 1fr; gap: var(--space-4); }
